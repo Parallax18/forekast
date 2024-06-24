@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 type HttpMethods = "GET" | "POST" | "PUT" | "PATCH" | "DEL";
 
 async function FETCH<T>({
@@ -16,6 +18,7 @@ async function FETCH<T>({
   });
 
   if (!response.ok) {
+    toast("Event has not been created");
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 

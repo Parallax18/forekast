@@ -1,5 +1,6 @@
 "use server";
 
+import { toast } from "sonner";
 import { QueryKeys } from "../constants";
 import { HttpClient } from "../http";
 
@@ -12,7 +13,8 @@ export async function getForecast(params: ForecastRequestParams) {
     });
   } catch (err) {
     console.error("Error fetching forecast:", err);
-    console.log(err);
+
+    throw err;
   }
 }
 
