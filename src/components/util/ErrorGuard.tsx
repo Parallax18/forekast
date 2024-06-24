@@ -32,7 +32,7 @@ const ErrorGuard = ({
               <input
                 name={"city"}
                 placeholder="Check the weather for any country"
-                className="bg-slate-200 rounded-md rounded-r-none w-full p-3 outline-none border-none text-bg"
+                className="bg-fade text-offWhite rounded-md rounded-r-none w-full p-3 outline-none border-none "
               />
               <Button isLoading={isLoading} text="GO" />
             </div>
