@@ -13,13 +13,14 @@ interface DayCardProps {
   day: string;
   tempC: string;
   image: string;
+  isLoading: boolean;
 }
 
 const DayCard = (props: DayCardProps) => {
-  const { day, tempC, image } = props;
+  const { day, tempC, image, isLoading } = props;
   return (
-    <Card>
-      <div className="flex  items-center flex-col gap-8">
+    <Card isLoading={isLoading}>
+      <div className="flex  items-center flex-col gap-8  h-40">
         <Image width={64} height={64} src={`https:${image}`} alt="" />
         <div>
           <p

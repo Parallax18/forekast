@@ -30,13 +30,14 @@ interface SidebarProps {
   location: { city: string; country: string };
   isDay: number;
   image: string;
+  isLoading: boolean;
 }
 
 const Sidebar = (props: SidebarProps) => {
-  const { day, tempC, time, location, isDay, image } = props;
+  const { day, tempC, time, location, isDay, isLoading } = props;
   return (
     <section className="py-5 h-full md:w-[25%] md:fixed top-0 md:pt-y pt-14">
-      <Card>
+      <Card isLoading={isLoading}>
         <div className="flex flex-col items-center pb-10 ">
           <div className="flex flex-col gap-6 w-full">
             <p className="md:text-9xl text-5xl font-normal text-white ">

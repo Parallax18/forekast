@@ -5,13 +5,14 @@ import Card from "../general/Card";
 interface TodayCardProps {
   title: string;
   value: string;
+  isLoading: boolean;
 }
 
 const TodayCard = (props: TodayCardProps) => {
-  const { title, value } = props;
+  const { title, value, isLoading } = props;
   return (
-    <Card>
-      <div className="flex  flex-col gap-8">
+    <Card isLoading={isLoading}>
+      <div className={`flex  flex-col gap-8`}>
         <p className={`flex gap-1 items-center text-2xl  text-gray-500`}>
           {title}
         </p>
