@@ -9,7 +9,7 @@ const barlow = Barlow({
 });
 
 export const metadata: Metadata = {
-  title: "Weather app",
+  title: "Forekast",
   description: "Basic weather app with weather Api",
 };
 
