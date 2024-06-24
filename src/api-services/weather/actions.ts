@@ -3,7 +3,7 @@
 import { QueryKeys } from "../constants";
 import { HttpClient } from "../http";
 
-const key = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+const key = process.env.NEXT_PUBLIC_WEATHER_API;
 export async function getForecast(params: ForecastRequestParams) {
   try {
     return await HttpClient.get<ForecastResponse>({
