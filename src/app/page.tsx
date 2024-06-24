@@ -19,9 +19,9 @@ export default function Home() {
   } = useGetForecast({ city, days: "7" });
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    // @ts-expect-error -
     const formData = new FormData(e.target);
     const _city = formData.get("city");
-    console.log(city);
     e.preventDefault();
     setCity(_city as string);
   };
@@ -30,7 +30,7 @@ export default function Home() {
   }, [forecastData, error]);
 
   return (
-    <main className="h-screen flex p-3 relative">
+    <main className="h-screen flex flex-col md:flex-row p-3 relative w-full">
       <Sidebar
         tempC={String(forecastData?.current?.temp_c)}
         day={getDayOfWeek(String(forecastData?.current?.last_updated))}
@@ -42,26 +42,29 @@ export default function Home() {
         isDay={forecastData?.current.is_day as number}
         image={String(forecastData?.current.condition.icon)}
       />
-      <section className="p-5 pl-[30%] space-y-10">
+      <section className="md:p-5 md:pl-[30%] space-y-10 w-full">
         <form onSubmit={handleSubmit}>
-          <div className="flex">
+          <div className="flex fixed md:relative top-0 w-full left-0 p-5 md:p-0 bg-bg">
             <input
               name={"city"}
               placeholder="Check the weather for any country"
               className="bg-slate-200 rounded-md rounded-r-none w-full p-3 outline-none border-none"
             />
-            <button type="submit" className="p-3 w-16 bg-green-700 text-white">
+            <button
+              type="submit"
+              className="p-3 w-16 bg-green-700 rounded-r-md text-white"
+            >
               Go
             </button>
           </div>
         </form>
         <div>
           <p
-            className={` text-xl mb-4 text-[#e1e1e1] border-b border-[#e1e1e1] pb-1`}
+            className={` text-xl mb-4 text-offWhite border-b border-fade pb-1`}
           >
             This Week&apos;s forecast
           </p>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-4 md:grid-cols-7 gap-2">
             {forecastData?.forecast?.forecastday?.map((data) => (
               <DayCard
                 key={data?.date_epoch}
@@ -72,13 +75,13 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <section>
+        <section className="  w-full">
           <p
-            className={` text-xl mb-4  text-[#e1e1e1] border-b border-[#e1e1e1] pb-1`}
+            className={` text-xl mb-4 w-full text-offWhite border-b border-fade pb-1`}
           >
             Today&apos;s Highlights
           </p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 w-full">
             <TodayCard
               title={"Wind Speed"}
               value={String(forecastData?.current?.wind_kph)}

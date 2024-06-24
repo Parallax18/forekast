@@ -15,7 +15,7 @@ const TodayCard = (props: TodayCardProps) => {
         <p className={`flex gap-1 items-center text-2xl  text-gray-500`}>
           {title}
         </p>
-        <p className="text-6xl font-normal text-white ">
+        <p className="md:text-6xl text-2xl font-normal text-white ">
           {/* 12&deg;<sup>c</sup> */}
           {value}
         </p>

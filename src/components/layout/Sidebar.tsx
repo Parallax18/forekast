@@ -35,11 +35,11 @@ interface SidebarProps {
 const Sidebar = (props: SidebarProps) => {
   const { day, tempC, time, location, isDay, image } = props;
   return (
-    <section className="py-5 h-full w-[25%] fixed top-0">
+    <section className="py-5 h-full md:w-[25%] md:fixed top-0 md:pt-y pt-14">
       <Card>
         <div className="flex flex-col items-center pb-10 ">
           <div className="flex flex-col gap-6 w-full">
-            <p className="text-9xl font-normal text-white ">
+            <p className="md:text-9xl text-5xl font-normal text-white ">
               {tempC}&deg;<sup>c</sup>
             </p>
             <p className="flex gap-1 items-center text-xl">
@@ -53,7 +53,7 @@ const Sidebar = (props: SidebarProps) => {
         <div className="relative h-52 w-full bg-primary">
           <Image
             fill
-            className="object-cover rounded-md"
+            className="object-cover rounded-md w-full"
             src={isDay ? daySky : nightSky}
             alt=""
           />
