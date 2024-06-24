@@ -15,7 +15,7 @@ export default function Home() {
   const {
     data: forecastData,
     error,
-    isPending,
+    isLoading,
   } = useGetForecast({ city, days: "7" });
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
