@@ -18,27 +18,45 @@ const barlow = Barlow({
   weight: ["700"],
 });
 
-const Sidebar = () => {
+enum TIME_OF_DAY {
+  DAY,
+  NIGHT,
+}
+
+interface SidebarProps {
+  day: string;
+  tempC: string;
+  time: string;
+  location: { city: string; country: string };
+  isDay: number;
+  image: string;
+}
+
+const Sidebar = (props: SidebarProps) => {
+  const { day, tempC, time, location, isDay, image } = props;
   return (
     <section className="py-5 h-full w-[25%] fixed top-0">
       <Card>
         <div className="flex flex-col items-center pb-10 ">
-          <PartlyCloudyNightIcon />
-          {/* <PartlyCloudyDayIcon /> */}
           <div className="flex flex-col gap-6 w-full">
             <p className="text-9xl font-normal text-white ">
-              12&deg;<sup>c</sup>
+              {tempC}&deg;<sup>c</sup>
             </p>
             <p className="flex gap-1 items-center text-xl">
               <span className={`${barlow.className} font-bold text-white`}>
-                Monday,
+                {day},
               </span>
-              <span className="text-skyBlue">19:00</span>
+              <span className="text-skyBlue">{time}</span>
             </p>
           </div>
         </div>
-        <div className="relative h-52 w-full ">
-          <Image fill className="object-cover rounded-md" src={daySky} alt="" />
+        <div className="relative h-52 w-full bg-primary">
+          <Image
+            fill
+            className="object-cover rounded-md"
+            src={isDay ? daySky : nightSky}
+            alt=""
+          />
           <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center bg-gray-800/20">
             <p
               className={`${barlow.className} text-2xl text-white  p-1 flex items-center`}
@@ -46,7 +64,7 @@ const Sidebar = () => {
               <span>
                 <MapPinIcon />
               </span>
-              Abuja, Nigeria
+              {location?.city}, {location?.country}
             </p>
           </div>
         </div>

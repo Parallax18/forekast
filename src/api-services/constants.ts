@@ -1,4 +1,4 @@
 export const QueryKeys = {
-  FORECAST: ["get-forecast"],
+  FORECAST: (params: string[]) => ["get-forecast", ...params],
   CURRENT: ["get-current"],
 };

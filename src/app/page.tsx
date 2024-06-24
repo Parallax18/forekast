@@ -2,36 +2,28 @@
 
 import DayCard from "@/components/calender/DayCard";
 import TodayCard from "@/components/calender/TodayCard";
-import { PartlyCloudyNightIcon } from "@/components/icons";
+
 import Sidebar from "@/components/layout/Sidebar";
 
-import { useFormState, useFormStatus } from "react-dom";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { FormEventHandler, useEffect, useState } from "react";
+
 import { useGetForecast } from "@/api-services/weather/hooks";
+import { getDayOfWeek } from "@/utils/get-day-of-week";
 
 export default function Home() {
+  const [city, setCity] = useState("Abuja");
   const {
-    mutate: getForecastData,
     data: forecastData,
     error,
     isPending,
-  } = useGetForecast();
+  } = useGetForecast({ city, days: "7" });
 
-  // const { data: forecastData, isLoading } = useGetWeatherForecast({
-  //   days: "7",
-  //   city,
-  // });
-  // const { data: forecastData, isLoading } = useQuery(
-  //   getForecast({ city, days: 7 })
-  // );
-
-  const handleSubmit = (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     const formData = new FormData(e.target);
-    const city = formData.get("city");
+    const _city = formData.get("city");
     console.log(city);
     e.preventDefault();
-    getForecastData({ city, days: "7" });
+    setCity(_city as string);
   };
   useEffect(() => {
     console.log({ forecastData, error });
@@ -39,14 +31,24 @@ export default function Home() {
 
   return (
     <main className="h-screen flex p-3 relative">
-      <Sidebar />
+      <Sidebar
+        tempC={String(forecastData?.current?.temp_c)}
+        day={getDayOfWeek(String(forecastData?.current?.last_updated))}
+        time={forecastData?.current?.last_updated.split(" ")[1] as string}
+        location={{
+          city: String(forecastData?.location.name),
+          country: String(forecastData?.location.country),
+        }}
+        isDay={forecastData?.current.is_day as number}
+        image={String(forecastData?.current.condition.icon)}
+      />
       <section className="p-5 pl-[30%] space-y-10">
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className="flex">
             <input
               name={"city"}
               placeholder="Check the weather for any country"
-              className="bg-slate-200 rounded-md w-full p-3 outline-none border-none"
+              className="bg-slate-200 rounded-md rounded-r-none w-full p-3 outline-none border-none"
             />
             <button type="submit" className="p-3 w-16 bg-green-700 text-white">
               Go
@@ -60,14 +62,14 @@ export default function Home() {
             This Week&apos;s forecast
           </p>
           <div className="flex gap-2">
-            {/* {forecastData?.} */}
-            <DayCard />
-            <DayCard />
-            <DayCard />
-            <DayCard />
-            <DayCard />
-            <DayCard />
-            <DayCard />
+            {forecastData?.forecast?.forecastday?.map((data) => (
+              <DayCard
+                key={data?.date_epoch}
+                day={getDayOfWeek(data?.date, { shorten: true })}
+                tempC={data?.day.avgtemp_c.toLocaleString()}
+                image={data?.day.condition?.icon}
+              />
+            ))}
           </div>
         </div>
         <section>
@@ -77,10 +79,22 @@ export default function Home() {
             Today&apos;s Highlights
           </p>
           <div className="grid grid-cols-2 gap-4">
-            <TodayCard />
-            <TodayCard />
-            <TodayCard />
-            <TodayCard />
+            <TodayCard
+              title={"Wind Speed"}
+              value={String(forecastData?.current?.wind_kph)}
+            />
+            <TodayCard
+              title={"Humidity"}
+              value={String(forecastData?.current?.humidity)}
+            />
+            <TodayCard
+              title={"Pressure"}
+              value={String(forecastData?.current?.pressure_in)}
+            />
+            <TodayCard
+              title={"Description"}
+              value={String(forecastData?.current?.condition.text)}
+            />
           </div>
         </section>
       </section>
