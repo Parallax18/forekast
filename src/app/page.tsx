@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <main className="h-screen flex flex-col md:flex-row p-3 relative w-full">
       <ErrorGuard
-        isError={isError}
+        isError={isError || (!forecastData && !isLoading)}
         isLoading={isLoading}
         handleSubmit={handleSubmit}
       >

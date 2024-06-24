@@ -19,6 +19,7 @@ async function FETCH<T>({
 
   if (!response.ok) {
     toast("Event has not been created");
+
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
