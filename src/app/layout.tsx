@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Barlow } from "next/font/google";
 import "./globals.css";
+import ProviderRoot from "@/providers";
 
 const barlow = Barlow({
   subsets: ["latin"],
@@ -18,8 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={barlow.className}>{children}</body>
-    </html>
+    <ProviderRoot>
+      <html lang="en">
+        <body className={barlow.className}>{children}</body>
+      </html>
+    </ProviderRoot>
   );
 }
