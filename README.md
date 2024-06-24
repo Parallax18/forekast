@@ -30,7 +30,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project utilizes nextjs server actions to make requests to [`weather-api`](https://app.swaggerhub.com/apis-docs/WeatherAPI.com/WeatherAPI/1.0.2#/) without suffering CORs error
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load the custom Google Font.
 
 [`React query`](https://tanstack.com/query/latest/docs/framework/react/installation) is used to handle API calls.
 
