@@ -14,6 +14,7 @@ import ErrorGuard from "@/components/util/ErrorGuard";
 
 export default function Home() {
   const [city, setCity] = useState("Abuja");
+  const [fieldError, setFieldError] = useState({ isValid: true, message: "" });
   const {
     data: forecastData,
 
@@ -24,9 +25,16 @@ export default function Home() {
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     // @ts-expect-error -
     const formData = new FormData(e.target);
-    const _city = formData.get("city");
     e.preventDefault();
-    setCity(_city as string);
+    const _city = formData.get("city");
+
+    // Simplified error handling. Complex applications can use tools like RHF, FORMIK, ZOD, YUP ...
+    if ((_city as string)?.length === 0) {
+      setFieldError({ isValid: false, message: "Please enter a city" });
+    } else {
+      setFieldError({ isValid: true, message: "" });
+      setCity(_city as string);
+    }
   };
 
   return (
@@ -51,13 +59,16 @@ export default function Home() {
           />
           <section className="md:p-5 md:pl-[30%] space-y-10 w-full">
             <form onSubmit={handleSubmit}>
-              <div className="flex fixed md:relative top-0 w-full left-0 p-5 md:p-0 bg-bg">
-                <input
-                  name={"city"}
-                  placeholder="Check the weather for any country"
-                  className="bg-fade text-offWhite rounded-md rounded-r-none w-full p-3 outline-none border-none"
-                />
-                <Button isLoading={isLoading} text="GO" />
+              <div className=" fixed md:relative top-0 w-full left-0 p-5 md:p-0 bg-bg">
+                <div className="flex w-full">
+                  <input
+                    name={"city"}
+                    placeholder="Check the weather for any country"
+                    className="bg-fade text-offWhite rounded-md rounded-r-none w-full p-3 outline-none border-none"
+                  />
+                  <Button isLoading={isLoading} text="GO" />
+                </div>
+                <p className="text-red-400">{fieldError.message}</p>
               </div>
             </form>
 
