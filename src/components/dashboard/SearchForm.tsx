@@ -36,7 +36,7 @@ const SearchForm = <T extends Record<string, any>>(
           />
           <div className="w-[30%] flex items-center justify-center border-l  border-l-bg relative">
             <div
-              className="bg-fade w-full flex justify-center items-center cursor-pointer"
+              className="bg-fade w-full flex justify-center items-center cursor-pointer px-1"
               onClick={() => setCalenderIsOpen(!calenderIsOpen)}
             >
               <p className="text-slate-400 cursor-pointer whitespace-nowrap">
