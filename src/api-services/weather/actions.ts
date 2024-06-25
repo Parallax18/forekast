@@ -1,7 +1,5 @@
 "use server";
 
-import { toast } from "sonner";
-import { QueryKeys } from "../constants";
 import { HttpClient } from "../http";
 
 const key = process.env.NEXT_PUBLIC_WEATHER_API;
@@ -17,23 +15,15 @@ export async function getForecast(params: ForecastRequestParams) {
     throw err;
   }
 }
+export async function getFutureForecast(params: FutureForecastRequestParams) {
+  try {
+    return await HttpClient.get<FutureForecastResponse>({
+      url: "future.json",
+      params: { q: params.city, dt: params.date, key },
+    });
+  } catch (err) {
+    console.error("Error fetching forecast:", err);
 
-export async function getCurrentDayWeatherDetails(
-  params: WeatherRequestBaseParams
-) {
-  return {
-    queryKey: QueryKeys.CURRENT,
-    queryFn: async () => {
-      try {
-        return await HttpClient.get<CurrentDayWeatherDetailsResponse>({
-          url: "/current.json",
-          params: { q: params.city, key },
-        });
-      } catch (err) {
-        console.error("Error fetching current day weather details:", err);
-        throw err;
-      }
-    },
-    enabled: !!params.city,
-  };
+    throw err;
+  }
 }

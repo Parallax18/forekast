@@ -4,6 +4,11 @@ interface WeatherRequestBaseParams {
 
 interface ForecastRequestParams extends WeatherRequestBaseParams {
   days: string;
+  date?: string;
+}
+
+interface FutureForecastRequestParams extends WeatherRequestBaseParams {
+  date?: string;
 }
 
 interface CurrentDayWeatherDetailsResponse {
@@ -14,6 +19,10 @@ interface CurrentDayWeatherDetailsResponse {
 interface ForecastResponse {
   location: Location;
   current: Current;
+  forecast: Forecast;
+}
+interface FutureForecastResponse {
+  location: Location;
   forecast: Forecast;
 }
 

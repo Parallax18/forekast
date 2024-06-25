@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.45.1",
+    "date-fns": "^3.6.0",
     "next": "14.2.4",
     "react": "^18",
+    "react-calendar": "^5.0.0",
+    "react-date-range": "^2.0.1",
     "react-dom": "^18",
     "sonner": "^1.5.0"
   },
@@ -19,6 +22,7 @@
     "@tanstack/eslint-plugin-query": "^5.43.1",
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-date-range": "^1.4.9",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",

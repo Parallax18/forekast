@@ -29,7 +29,7 @@ interface SidebarProps {
   time: string;
   location: { city: string; country: string };
   isDay: number;
-  image: string;
+
   isLoading: boolean;
 }
 
