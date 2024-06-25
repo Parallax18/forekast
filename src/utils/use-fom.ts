@@ -51,7 +51,7 @@ export const useForm = <T extends Record<string, any>>(): UseForm<T> => {
       setFormState((prevState) => ({
         ...prevState,
         isValid,
-        ...(isValid && { message: "Please enter a value" }),
+        ...(!isValid && { message: "Please enter a value" }),
       }));
       if (isValid) onSubmit(formDataObj as T);
     };
