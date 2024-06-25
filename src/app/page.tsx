@@ -174,24 +174,26 @@ export default function Home() {
             />
 
             <>
-              <div>
-                <p
-                  className={` text-xl mb-4 text-offWhite border-b border-fade pb-1`}
-                >
-                  This Week&apos;s forecast
-                </p>
-                <div className="grid grid-cols-4 md:grid-cols-7 gap-2">
-                  {data?.forecastday?.map((data) => (
-                    <DayCard
-                      key={data?.date_epoch}
-                      day={getDayOfWeek(data?.date, { shorten: true })}
-                      tempC={data?.day.avgtemp_c.toLocaleString()}
-                      image={data?.day.condition?.icon}
-                      isLoading={isLoading}
-                    />
-                  ))}
+              {checkDateIsWithin14Days(selectedDate) && (
+                <div>
+                  <p
+                    className={` text-xl mb-4 text-offWhite border-b border-fade pb-1`}
+                  >
+                    This Week&apos;s forecast
+                  </p>
+                  <div className="grid grid-cols-4 md:grid-cols-7 gap-2">
+                    {data?.forecastday?.map((data) => (
+                      <DayCard
+                        key={data?.date_epoch}
+                        day={getDayOfWeek(data?.date, { shorten: true })}
+                        tempC={data?.day.avgtemp_c.toLocaleString()}
+                        image={data?.day.condition?.icon}
+                        isLoading={isLoading}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
               <section className="  w-full">
                 <p
                   className={` text-xl mb-4 w-full text-offWhite border-b border-fade pb-1`}
