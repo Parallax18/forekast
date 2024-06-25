@@ -196,7 +196,7 @@ export default function Home() {
                       className="bg-fade w-full flex justify-center items-center cursor-pointer"
                       onClick={() => setCalenderIsOpen(!calenderIsOpen)}
                     >
-                      <p className="text-slate-400 cursor-pointer">
+                      <p className="text-slate-400 cursor-pointer whitespace-nowrap">
                         {handleFormatDate(selectedDate)}
                       </p>
                     </div>
