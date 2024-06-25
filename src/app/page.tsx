@@ -93,10 +93,6 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    console.log(futureForecastData, futureForecastError);
-  }, [futureForecastData, futureForecastError]);
-
   const mapStates = (): ForecastMappedData => {
     const isWithin14Days = checkDateIsWithin14Days(selectedDate);
     if (isWithin14Days) {
@@ -107,7 +103,7 @@ export default function Home() {
           time: forecastData?.current?.last_updated.split(" ")[1] as string,
           location: {
             city: String(forecastData?.location.name),
-            country: String(forecastData?.location.name),
+            country: String(forecastData?.location.country),
           },
           isDay: forecastData?.current.is_day as number,
           forecastday: forecastData?.forecast?.forecastday as Forecastday[],
