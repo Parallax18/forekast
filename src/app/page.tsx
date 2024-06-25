@@ -16,6 +16,8 @@ import Button from "@/components/general/Button";
 import ErrorGuard from "@/components/util/ErrorGuard";
 import DatePicker from "@/components/general/DatePicker";
 import { differenceInDays, format } from "date-fns";
+import SearchForm from "@/components/dashboard/SearchForm";
+import { handleFormatDate } from "@/utils/format-date";
 
 interface ForecastData {
   tempC: string;
@@ -42,14 +44,9 @@ interface ForecastMappedData {
 export default function Home() {
   const today = new Date();
   const [city, setCity] = useState("Abuja");
-  const [calenderIsOpen, setCalenderIsOpen] = useState(false);
+
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [fieldError, setFieldError] = useState({ isValid: true, message: "" });
-  const handleFormatDate = (date: string | number | Date | undefined) => {
-    return date
-      ? format(new Date(date!), "yyyy-MM-dd")
-      : format(new Date(), "yyyy-MM-dd");
-  };
+
   const checkDateIsWithin14Days = (date: Date) => {
     const isWithin14Days = differenceInDays(date, today) <= 14;
     return isWithin14Days;
@@ -68,7 +65,6 @@ export default function Home() {
   });
   const {
     data: futureForecastData,
-    error: futureForecastError,
     isError: isFutureForecastError,
     isLoading: loadingFutureForecast,
   } = useGetFutureForecast({
@@ -77,20 +73,11 @@ export default function Home() {
       ? handleFormatDate(selectedDate)
       : undefined,
   });
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    // @ts-expect-error -
-    const formData = new FormData(e.target);
-    e.preventDefault();
-    const _city = formData.get("city");
-
-    // Simplified error handling. Complex applications can use tools like RHF, FORMIK, ZOD, YUP ...
-    if ((_city as string)?.length === 0) {
-      setFieldError({ isValid: false, message: "Please enter a city" });
-    } else {
-      setFieldError({ isValid: true, message: "" });
-      setCity(_city as string);
-    }
+  interface Form {
+    city: string;
+  }
+  const onSubmit = (values: Form) => {
+    setCity(values.city);
   };
 
   const mapStates = (): ForecastMappedData => {
@@ -167,7 +154,8 @@ export default function Home() {
       <ErrorGuard
         isError={isError || (!data && !isLoading)}
         isLoading={isLoading}
-        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        handleDate={{ selectedDate, setSelectedDate }}
       >
         <>
           <Sidebar
@@ -179,35 +167,11 @@ export default function Home() {
             isDay={data?.isDay}
           />
           <section className="md:p-5 md:pl-[30%] space-y-10 w-full">
-            <form onSubmit={handleSubmit}>
-              <div className=" fixed md:relative top-0 w-full left-0 p-5 md:p-0 bg-bg">
-                <div className="flex w-full  bg-fade rounded-md ">
-                  <input
-                    name={"city"}
-                    placeholder="City name"
-                    className=" text-offWhite bg-transparent rounded-r-none w-[70%] p-3 outline-none border-none"
-                  />
-                  <div className="w-[30%] flex items-center justify-center border-l  border-l-bg relative">
-                    <div
-                      className="bg-fade w-full flex justify-center items-center cursor-pointer"
-                      onClick={() => setCalenderIsOpen(!calenderIsOpen)}
-                    >
-                      <p className="text-slate-400 cursor-pointer whitespace-nowrap">
-                        {handleFormatDate(selectedDate)}
-                      </p>
-                    </div>
-                    <DatePicker
-                      isOpen={calenderIsOpen}
-                      onClose={() => setCalenderIsOpen(false)}
-                      onSelect={setSelectedDate}
-                      selectedDate={selectedDate}
-                    />
-                  </div>
-                  <Button isLoading={isLoading} text="GO" />
-                </div>
-                <p className="text-red-400">{fieldError.message}</p>
-              </div>
-            </form>
+            <SearchForm
+              isLoading={isLoading}
+              onSubmit={onSubmit}
+              handleDate={{ selectedDate, setSelectedDate }}
+            />
 
             <>
               <div>
