@@ -2,7 +2,7 @@ import { handleFormatDate } from "@/utils/format-date";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import DatePicker from "../general/DatePicker";
 import Button from "../general/Button";
-import { useForm } from "@/utils/use-fom";
+import { useForm } from "@/utils/use-form";
 
 export interface SearchFormProps<T> {
   onSubmit: (values: T) => void;
