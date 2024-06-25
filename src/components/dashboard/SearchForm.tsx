@@ -26,7 +26,7 @@ const SearchForm = <T extends Record<string, any>>(
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className=" fixed md:relative top-0 w-full left-0 p-5 md:p-0 bg-bg">
+      <div className=" fixed md:relative top-0 w-full left-0 p-5 md:p-0 bg-bg z-50">
         <div className="flex w-full  bg-fade rounded-md ">
           <input
             name={"city"}
